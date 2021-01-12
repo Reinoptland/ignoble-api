@@ -1,13 +1,12 @@
 const fs = require("fs");
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const countryDetector = require("country-in-text-detector");
 
 const axios = require("axios");
 
 const REGEX_YEAR = /[0-9]{4}/;
 // Meant to match years: e.g. 2020 1991
-const REGEX_COUNTRY_ARRAY = /(\[)([A-Z ,]+)(\])/g;
-// Meant to match an array like format for countries: [USA, INDIA, ITALY]
 const REGEX_PEOPLE_NAMES = /[A-Z][a-z]+ ([A-Za-z.]+)? ?[A-Z][a-z]+/g;
 // Meant to match 2 or words starting with 1 uppercase letter and possibly some characters in between
 // These are often names, E.g. Joseph Keller, Erich von Daniken, Robert Klark Graham, Robert H. Beaumont
@@ -112,14 +111,7 @@ function parseResources(prize) {
 }
 
 function parseCountries(prize) {
-  const countries = prize.textContent.match(REGEX_COUNTRY_ARRAY);
-  if (countries) {
-    const countryString = countries[0];
-    return countryString.substring(1, countryString.length - 1).split(", ");
-  } else {
-    // console.log("ERROR: NO COUNTRIES COULD BE PARSED", prize.textContent);
-    return null;
-  }
+  return countryDetector.detect(prize.textContent);
 }
 
 function handleReasonExceptions(text) {
