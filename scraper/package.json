@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "country-in-text-detector": "^1.0.10",
     "jsdom": "^16.4.0"
   }
 }
