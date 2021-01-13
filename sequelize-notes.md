@@ -43,6 +43,8 @@ DEV_DATABASE_URL=<your database url here>
 ```js
 require("dotenv").config();
 
+// console.log(process.env) -> check if the variables are loaded from the file
+
 module.exports = {
   development: {
     use_env_variable: "DEV_DATABASE_URL",
@@ -55,4 +57,30 @@ module.exports = {
 
 ```bash
 npx sequelize-cli db:migrate
+```
+
+## Create datamodel
+
+[https://dbdiagram.io/](https://dbdiagram.io/)
+
+## Translate the datamodel into migrations and models
+
+- Use sequelize-cli model:generate
+
+```bash
+npx sequelize-cli model:generate --name Prize --attributes year:integer,type:string,description:text
+```
+
+- Run migrations
+
+```bash
+npx sequelize-cli db:migrate
+```
+
+- Check result in GUI
+
+Format of a postgres url
+
+```text
+<database type>://<User>:<Password>@<Host>:<Port>/<Database name>
 ```

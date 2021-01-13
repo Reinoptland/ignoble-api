@@ -11,3 +11,5 @@ The student is able to:
 - Document their api for other developers
 - Deploy your api to heroku
 - PR to open apis repo
+
+<iframe width="560" height="315" src='https://dbdiagram.io/embed/5ffec5bf80d742080a362424'> </iframe>
