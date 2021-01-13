@@ -84,3 +84,14 @@ Format of a postgres url
 ```text
 <database type>://<User>:<Password>@<Host>:<Port>/<Database name>
 ```
+
+## Seeding
+
+```bash
+npx sequelize-cli seed:generate --name seed-prizes
+```
+
+- Create a "up" script
+- Create a "down" script
+
+Check results in the GUI
