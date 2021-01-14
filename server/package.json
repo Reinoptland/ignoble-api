@@ -9,7 +9,8 @@
     "migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
     "reset": "npm run migrate:undo:all && npm run migrate",
     "seed:all": "npx sequelize-cli db:seed:all",
-    "seed:undo:all": "npx sequelize-cli db:seed:undo:all"
+    "seed:undo:all": "npx sequelize-cli db:seed:undo:all",
+    "reseed": "npm run seed:undo:all && npm run seed:all"
   },
   "keywords": [
     "ignoble",
