@@ -95,3 +95,18 @@ npx sequelize-cli seed:generate --name seed-prizes
 - Create a "down" script
 
 Check results in the GUI
+
+## Seeding related data
+
+hasOne (one to one): the id of this row, is foreignkey in another table
+hasMany (one to many): the id of this row, is foreignkey in another table
+belongsTo: there is a foreing key in this table which refers to the id in another table
+belongsToMany (many to many): there is join table, which relates this table to another table
+
+- [x] Prizes
+- [ ] Make a model & migration for the Researchers
+- [ ] Make a model & migration for the Winners
+- [ ] Relate the Researchers and Prizes to the Winners table
+  - Researchers hasMany Winners, Winners belongsTo Researchers
+  - Prizes hasMany Winners, Winners belongsTo Prizes
+- [ ] Relate the Researchers and the Prizes (belongsToMany)
