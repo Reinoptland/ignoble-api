@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Prize.hasMany(models.Winner);
+      Prize.belongsToMany(models.Researcher, { through: models.Winner });
     }
   }
   Prize.init(

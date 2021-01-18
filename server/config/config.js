@@ -1,9 +1,18 @@
 require("dotenv").config();
+// var pg = require("pg");
+// pg.defaults.ssl = true;
 
 module.exports = {
   development: {
     use_env_variable: "DEV_DATABASE_URL",
     dialect: "postgres",
+    // dialectOptions: {
+    //   ssl: true,
+    //   falserejectUnauthorized: false,
+    // },
+    pool: {
+      max: 4,
+    },
   },
   test: {
     username: "root",
