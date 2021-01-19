@@ -1,6 +1,6 @@
 "use strict";
 
-const prizes = require("../../scraper/prizes.json");
+const prizes = require("../data/prizes.json");
 const sequelize = require("sequelize");
 const { Prize, Researcher, Winner } = require("../models");
 
