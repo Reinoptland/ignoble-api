@@ -10,7 +10,9 @@
     "reset": "npm run migrate:undo:all && npm run migrate && npm run seed:all",
     "seed:all": "npx sequelize-cli db:seed:all",
     "seed:undo:all": "npx sequelize-cli db:seed:undo:all",
-    "reseed": "npm run seed:undo:all && npm run seed:all"
+    "reseed": "npm run seed:undo:all && npm run seed:all",
+    "start": "node index.js",
+    "dev": "npx nodemon index.js"
   },
   "keywords": [
     "ignoble",
@@ -20,8 +22,12 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
