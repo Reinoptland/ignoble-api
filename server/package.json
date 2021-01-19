@@ -12,7 +12,8 @@
     "seed:undo:all": "npx sequelize-cli db:seed:undo:all",
     "reseed": "npm run seed:undo:all && npm run seed:all",
     "start": "node index.js",
-    "dev": "npx nodemon index.js"
+    "dev": "npx nodemon index.js",
+    "heroku-postbuild": "npm run migrate && npm run seed:all"
   },
   "keywords": [
     "ignoble",
