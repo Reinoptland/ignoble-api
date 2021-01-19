@@ -1,0 +1,26 @@
+{
+  "countries": ["AUSTRIA", "SWEDEN", "JAPAN", "USA", "SWITZERLAND"],
+  "reason": "Inducing a female Chinese alligator to bellow in an airtight chamber filled with helium-enriched air.",
+  "resources": [
+    {
+      "name": "Stephan Reber",
+      "url": "https://www.lunduniversity.lu.se/article/lu-researcher-receives-ig-nobel-prize-alligator-helium-study"
+    },
+    {
+      "name": "Takeshi Nishimura",
+      "url": "https://www.kyoto-u.ac.jp/en/about/events_news/department/reityorui/news/2020/200918_1.html"
+    },
+    {
+      "name": "Judith Janisch",
+      "url": "https://fusanilab.org/people/judith-janisch/"
+    },
+    {
+      "name": "Tecumseh Fitch",
+      "url": "https://international.univie.ac.at/en/berichte-artikel-interviews/berichte/igr-nobel-prize-goes-to-a-chinese-alligator-in-heliox-formant-frequencies-in-a-crocodilian/"
+    },
+    {
+      "name": "A Chinese Alligator in Heliox: Formant Frequencies in a Crocodilian",
+      "url": "https://jeb.biologists.org/content/218/15/2442.short"
+    }
+  ]
+}
