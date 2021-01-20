@@ -34,6 +34,11 @@ app.get("/prizes", async (req, res) => {
       ...validatedQuery,
     },
   });
+
+  if (prizes.length === 0) {
+    return res.status(404).json([]);
+  }
+
   res.json(prizes);
 });
 

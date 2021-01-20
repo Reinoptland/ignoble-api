@@ -21,13 +21,13 @@ beforeAll(async () => {
         "Inducing a female Chinese alligator to bellow in an airtight chamber filled with helium-enriched air.",
     },
     {
-      year: 2020,
+      year: 2019,
       type: "PSYCHOLOGY",
       description:
         "Devising a method to identify narcissists by examining their eyebrows.",
     },
     {
-      year: 2020,
+      year: 2018,
       type: "PEACE",
       description:
         "Having their diplomats surreptitiously ring each other’s doorbells in the middle of the night, and then run away before anyone had a chance to answer the door.",
@@ -46,10 +46,16 @@ test("should respond with prizes as json", async (done) => {
   done();
 });
 
-// 1 feature TDD style (Test Driven Development)
-
 test("should accept a type parameter for the type of prize", async (done) => {
   const response = await server.get("/prizes?type=PEACE");
+
+  expect(response.status).toBe(200);
+  expect(response.body.length).toBe(1);
+  done();
+});
+
+test("should accept a year parameter for the year of the prize", async (done) => {
+  const response = await server.get("/prizes?year=2018");
 
   expect(response.status).toBe(200);
   expect(response.body.length).toBe(1);
@@ -63,5 +69,13 @@ test("should not accept parameters other than type or year", async (done) => {
   expect(response.body.message).toBe(
     "Invalid parameter, acceptable parameters are: type, year"
   );
+  done();
+});
+
+test("should set status 404 if when there are no results for a query", async (done) => {
+  const response = await server.get("/prizes?type=TEST");
+
+  expect(response.status).toBe(404);
+  expect(response.body.length).toBe(0);
   done();
 });
