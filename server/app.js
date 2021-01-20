@@ -6,8 +6,34 @@ const app = express();
 
 app.use(cors());
 
+function validateQuery(query, permittedProperties) {
+  const keys = Object.keys(query);
+  const valid = keys.every((key) => permittedProperties.includes(key));
+
+  if (valid) {
+    return [query, null];
+  } else {
+    return [
+      null,
+      `Invalid parameter, acceptable parameters are: ${permittedProperties.join(
+        ", "
+      )}`,
+    ];
+  }
+}
+
 app.get("/prizes", async (req, res) => {
-  const prizes = await Prize.findAll();
+  const [validatedQuery, error] = validateQuery(req.query, ["type", "year"]);
+
+  if (error) {
+    return res.status(400).json({ message: error });
+  }
+
+  const prizes = await Prize.findAll({
+    where: {
+      ...validatedQuery,
+    },
+  });
   res.json(prizes);
 });
 
