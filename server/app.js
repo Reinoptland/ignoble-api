@@ -8,23 +8,8 @@ const app = express();
 
 app.use(cors());
 
-app.get("/prizes", async (req, res) => {
-  // const limit = req.query.limit || 20;
-  // const offset = req.query.offset || 0;
-
-  // const permittedParameters = ["type", "year", "limit", "offset"];
-  // const searchAbleProperties = ["type", "year"];
-
-  // const [validatedQuery, error] = validateQuery(
-  //   req.query,
-  //   permittedParameters,
-  //   searchAbleProperties
-  // );
-
-  // if (error) {
-  //   return res.status(400).json({ message: error });
-  // }
-
+async function validationMiddleWare(req, res, next) {
+  console.log("hi, i am in the middle");
   let schema = yup
     .object()
     .shape({
@@ -43,8 +28,29 @@ app.get("/prizes", async (req, res) => {
       }
     );
 
-    console.log("QUERY:", validatedQuery);
+    req.limit = limit;
+    req.offset = offset;
+    req.validatedQuery = validatedQuery;
+    next();
+  } catch (error) {
+    res.status(400).json({ message: "Bad request", errors: error.errors });
+  }
+}
 
+app.get("/prizes", validationMiddleWare, async (req, res) => {
+  // validation middleware
+  // validating / casting the query
+  // - validation error
+  // - other
+
+  // route handler
+  // queryin the database
+  // success response
+  // error responses
+  // - no data found
+  // - other
+  const { limit, offset, validatedQuery } = req;
+  try {
     const { count, rows } = await Prize.findAndCountAll({
       limit: limit,
       offset: offset,
