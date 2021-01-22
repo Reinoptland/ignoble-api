@@ -1,42 +1,32 @@
 const express = require("express");
 const cors = require("cors");
 const { Prize } = require("./models");
-const { validateQuery } = require("./validators/queries");
+const { validatePrizesQueries } = require("./validators");
+const yup = require("yup");
 
 const app = express();
 
 app.use(cors());
 
-app.get("/prizes", async (req, res) => {
-  const limit = req.query.limit || 20;
-  const offset = req.query.offset || 0;
+app.get("/prizes", validatePrizesQueries, async (req, res) => {
+  const { limit, offset, validatedQuery } = req;
+  try {
+    const { count, rows } = await Prize.findAndCountAll({
+      limit: limit,
+      offset: offset,
+      where: {
+        ...validatedQuery,
+      },
+    });
 
-  const permittedParameters = ["type", "year", "limit", "offset"];
-  const searchAbleProperties = ["type", "year"];
+    if (count === 0) {
+      return res.status(404).json({ count, prizes: [] });
+    }
 
-  const [validatedQuery, error] = validateQuery(
-    req.query,
-    permittedParameters,
-    searchAbleProperties
-  );
-
-  if (error) {
-    return res.status(400).json({ message: error });
+    res.json({ count, prizes: rows });
+  } catch (error) {
+    res.status(400).json({ message: "Bad request", errors: error.errors });
   }
-
-  const { count, rows } = await Prize.findAndCountAll({
-    limit: limit,
-    offset: offset,
-    where: {
-      ...validatedQuery,
-    },
-  });
-
-  if (count === 0) {
-    return res.status(404).json({ count, prizes: [] });
-  }
-
-  res.json({ count, prizes: rows });
 });
 
 module.exports = app;
