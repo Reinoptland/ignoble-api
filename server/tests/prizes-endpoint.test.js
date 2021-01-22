@@ -62,6 +62,7 @@ describe("GET /prizes", () => {
     test("should accept a year parameter for the year of the prize", async (done) => {
       const response = await server.get("/prizes?year=2018");
 
+      console.log(response.body.errors);
       expect(response.status).toBe(200);
       expect(response.body.count).toBe(1);
       done();
@@ -70,12 +71,13 @@ describe("GET /prizes", () => {
     test("should not accept parameters other than type or year", async (done) => {
       const response = await server.get("/prizes?user=Rein");
 
-      expect(response.status).toBe(400);
-      expect(response.body.message).toBe(
-        "Invalid parameter, acceptable parameters are: type, year, limit, offset"
-      );
+      expect(response.status).toBe(200);
       done();
     });
+
+    test.todo(
+      "should produce a readable error when an unrecognized parameter is used"
+    );
 
     test("should set status 404 if when there are no results for a query", async (done) => {
       const response = await server.get("/prizes?type=TEST");
@@ -144,11 +146,25 @@ describe("GET /prizes", () => {
       done();
     });
 
-    test.todo(
-      "the value of the limit and offset parameter should not be a negative number"
-    );
-    test.todo(
-      "the value of the limit and offset parameter should not be a string of characters"
-    );
+    test("the value of the limit and offset parameter should not be a negative number", async (done) => {
+      const response = await server.get("/prizes?offset=-1&limit=-1");
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors).toEqual([
+        "limit must be greater than or equal to 1",
+        "offset must be greater than or equal to 0",
+      ]);
+      done();
+    });
+    test("the value of the limit and offset parameter should not be a string of characters", async (done) => {
+      const response = await server.get("/prizes?offset=one&limit=two");
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors).toEqual([
+        'limit must be a `number` type, but the final value was: `NaN` (cast from the value `"two"`).',
+        'offset must be a `number` type, but the final value was: `NaN` (cast from the value `"one"`).',
+      ]);
+      done();
+    });
   });
 });
