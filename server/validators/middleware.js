@@ -4,12 +4,13 @@ function validationMiddleWareFactory(schema) {
       const { limit, offset, ...validatedQuery } = await schema.validate(
         req.query,
         {
-          abortEarly: false,
+          abortEarly: false, // we want to produce all the errors, not fail on the first one
         }
       );
 
       req.limit = limit;
       req.offset = offset;
+      // splitting validateQuery off from pagination, as it goes into sequelize where object
       req.validatedQuery = validatedQuery;
       next();
     } catch (error) {

@@ -8,21 +8,7 @@ const app = express();
 
 app.use(cors());
 
-// A DESIGN PATTERN:
-// A FACTORY PATTERN
-
 app.get("/prizes", validatePrizesQueries, async (req, res) => {
-  // validation middleware
-  // validating / casting the query
-  // - validation error
-  // - other
-
-  // route handler
-  // queryin the database
-  // success response
-  // error responses
-  // - no data found
-  // - other
   const { limit, offset, validatedQuery } = req;
   try {
     const { count, rows } = await Prize.findAndCountAll({

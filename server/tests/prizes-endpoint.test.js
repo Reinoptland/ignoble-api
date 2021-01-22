@@ -62,7 +62,6 @@ describe("GET /prizes", () => {
     test("should accept a year parameter for the year of the prize", async (done) => {
       const response = await server.get("/prizes?year=2018");
 
-      console.log(response.body.errors);
       expect(response.status).toBe(200);
       expect(response.body.count).toBe(1);
       done();
