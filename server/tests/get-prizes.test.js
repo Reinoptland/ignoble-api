@@ -2,7 +2,6 @@ const app = require("../app");
 const db = require("../models");
 
 const request = require("supertest");
-const { expect, afterAll } = require("@jest/globals");
 
 const server = request(app);
 
@@ -44,6 +43,7 @@ describe("GET /prizes", () => {
 
     test("should respond with prizes as json without a querystring", async (done) => {
       const response = await server.get("/prizes");
+      console.log(response.body);
 
       expect(response.status).toBe(200);
       expect(response.body.count).toBe(3);
