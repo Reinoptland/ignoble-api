@@ -10,7 +10,7 @@ describe("GET /prizes/:id", () => {
     await db.sequelize.close();
   });
 
-  describe(" query string options", () => {
+  describe(" requesting one prize", () => {
     afterAll(async () => {
       await db.Prize.destroy({ truncate: true, cascade: true });
     });
@@ -41,13 +41,31 @@ describe("GET /prizes/:id", () => {
       await db.Prize.bulkCreate(testData);
     });
 
-    test.only("should get one prize by id", async (done) => {
+    test("should get one prize by id", async (done) => {
       const prize = await db.Prize.findOne();
       const idToRequest = prize.id;
 
       const response = await server.get(`/prizes/${idToRequest}`);
 
       expect(response.status).toBe(200);
+      done();
+    });
+
+    test("should only accept a valid id", async (done) => {
+      const response = await server.get("/prizes/cheese");
+
+      expect(response.status).toBe(400);
+      expect(response.body.errors).toEqual([
+        'id must be a `number` type, but the final value was: `NaN` (cast from the value `"cheese"`).',
+      ]);
+      done();
+    });
+
+    test("should return a 404 when a prize with the requested id does not exist", async (done) => {
+      const response = await server.get("/prizes/1000000");
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual(null);
       done();
     });
   });

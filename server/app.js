@@ -39,20 +39,31 @@ app.get(
 
       res.json({ count, prizes: rows });
     } catch (error) {
-      console.log("ERR?", error);
-      res.status(400).json({ message: "Bad request", errors: error.errors });
+      console.error("ERR?", error);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 );
 
-app.get("/prizes/:id", async function (req, res, next) {
-  try {
-    const prize = await Prize.findByPk(req.params.id);
-
-    res.json(prize);
-  } catch (error) {
-    console.log("ERR?", error);
+app.get(
+  "/prizes/:id",
+  validate(
+    yup.object().shape({ id: yup.number().positive().integer() }),
+    "params"
+  ),
+  async function (req, res) {
+    const { id } = req.validatedParams;
+    try {
+      const prize = await Prize.findByPk(id);
+      if (prize === null) {
+        res.status(404);
+      }
+      res.json(prize);
+    } catch (error) {
+      console.error("ERR?", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
-});
+);
 
 module.exports = app;

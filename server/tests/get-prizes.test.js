@@ -43,7 +43,6 @@ describe("GET /prizes", () => {
 
     test("should respond with prizes as json without a querystring", async (done) => {
       const response = await server.get("/prizes");
-      console.log(response.body);
 
       expect(response.status).toBe(200);
       expect(response.body.count).toBe(3);
