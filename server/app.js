@@ -3,10 +3,12 @@ const cors = require("cors");
 const { Prize } = require("./models");
 const validate = require("./validators/middleware");
 const yup = require("yup");
+const morgan = require("morgan");
 
 const app = express();
 
 app.use(cors());
+app.use(morgan("dev"));
 
 app.get(
   "/prizes",
