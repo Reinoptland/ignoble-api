@@ -2,7 +2,6 @@ const app = require("../app");
 const db = require("../models");
 
 const request = require("supertest");
-const { expect, afterAll } = require("@jest/globals");
 
 const server = request(app);
 
